@@ -44,13 +44,12 @@ public class ScoreboardUpdateTask extends BukkitRunnable {
 
         if (scoreboard == null) {
             createScoreboard();
-            player.setScoreboard(scoreboard);
         }
 
-        Objective objective = getObjective();
-        if (objective == null && hasValidScoreboard()) return; // other scoreboard, waiting
+        if (!isSameScoreboard(player.getScoreboard(), scoreboard) && hasValidScoreboard(player)) return;
 
         updateScoreboard();
+        setPlayerScoreboard();
     }
 
     private void updateScoreboard() {
@@ -61,8 +60,8 @@ public class ScoreboardUpdateTask extends BukkitRunnable {
     private void updateTitle() {
         if (scoreboard == null) return;
 
-        Objective objective = getObjective();
-        if (objective == null || objective.getDisplayName().equals(getScoreboardInfo().getTitle())) return;
+        Objective objective = getScoreboardObjective();
+        if (objective.getDisplayName().equals(getScoreboardInfo().getTitle())) return;
 
         objective.setDisplayName(getScoreboardInfo().getTitle());
     }
@@ -70,9 +69,7 @@ public class ScoreboardUpdateTask extends BukkitRunnable {
     private void updateLines() {
         if (scoreboard == null) return;
 
-        Objective objective = getObjective();
-        if (objective == null) return;
-
+        Objective objective = getScoreboardObjective();
         ScoreboardInfo newScoreboardInfo = getScoreboardInfo();
         if (newScoreboardInfo != scoreboardInfo) {
             scoreboardInfo = newScoreboardInfo;
@@ -110,17 +107,27 @@ public class ScoreboardUpdateTask extends BukkitRunnable {
         objective.setDisplayName(getScoreboardInfo().getTitle());
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
+
+    private void setPlayerScoreboard() {
+        if (isSameScoreboard(player.getScoreboard(), scoreboard)) return;
+
+        player.setScoreboard(scoreboard);
+    }
     
     private ScoreboardInfo getScoreboardInfo() {
         return ScoreboardUtils.getPlayerScoreboardInfo(player);
     }
 
-    private Objective getObjective() {
+    private Objective getScoreboardObjective() {
         return scoreboard.getObjective("VoltzScoreboard");
     }
 
-    private boolean hasValidScoreboard() {
-        return player.getScoreboard() != null && player.getScoreboard().getEntries().size() > 0;
+    private boolean isSameScoreboard(Scoreboard scoreboard, Scoreboard scoreboardToCompare) {
+        return scoreboard.equals(scoreboardToCompare);
+    }
+
+    private boolean hasValidScoreboard(Player player) {
+        return player.getScoreboard().getEntries().size() > 0;
     }
 
     public void start() {
