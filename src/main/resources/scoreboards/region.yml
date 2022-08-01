@@ -1,0 +1,13 @@
+Settings:
+  type: REGION # DEFAULT, HOLD_ITEM, WORLD, REGION
+  regions:
+    - 'mine'
+
+Scoreboard:
+  title: 'a'
+  lines:
+    - ''
+    - ''
+    - ''
+    - ''
+    - ''

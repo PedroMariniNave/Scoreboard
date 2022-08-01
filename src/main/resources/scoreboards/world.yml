@@ -1,0 +1,13 @@
+Settings:
+  type: WORLD # DEFAULT, HOLD_ITEM, WORLD, REGION
+  worlds:
+    - 'plotworld'
+
+Scoreboard:
+  title: 'a'
+  lines:
+    - ''
+    - ''
+    - ''
+    - ''
+    - ''

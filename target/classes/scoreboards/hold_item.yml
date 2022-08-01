@@ -1,0 +1,19 @@
+Settings:
+  type: HOLD_ITEM # DEFAULT, HOLD_ITEM, WORLD, REGION
+  items:
+    1:
+      type: _AXE
+#      name: 'Item Name'
+#      lore:
+#        - 'Item Lore'
+#      nbts:
+#        - 'Item NBT'
+
+Scoreboard:
+  title: 'a'
+  lines:
+    - ''
+    - ''
+    - ''
+    - ''
+    - ''
